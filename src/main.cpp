@@ -1,9 +1,11 @@
 #include <windows.h>
 #include <GL/glut.h>
 #include <math.h>
+#include <stdio.h>
 #include <GL/glu.h>
 
 GLfloat xRotated, yRotated, zRotated;
+GLuint tex;
 GLdouble size=1.0;
 void display(void);
 
@@ -12,6 +14,51 @@ void idle(void) {
 	yRotated += 0.01;
     // zRotated += 0.01; 
     display();
+}
+
+void make_tex(void)
+{
+    // GLuint loadBMP_custom(const char * imagepath);
+    // GLuint image = loadBMP_custom("./my_texture.bmp");
+    // Data read from the header of the BMP file
+    unsigned char header[54]; // Each BMP file begins by a 54-bytes header
+    unsigned int dataPos;     // Position in the file where the actual data begins
+    unsigned int width, height;
+    unsigned int imageSize;   // = width*height*3
+    // Actual RGB data
+    unsigned char * data;
+
+    FILE * file = fopen("./Image9.bmp","rb");
+    if (!file){printf("Image could not be opened\n"); /*return 0;*/}
+    if ( fread(header, 1, 54, file)!=54 ){ // If not 54 bytes read : problem
+        printf("Not a correct BMP file\n");
+        // return false;
+    }
+
+    // Read ints from the byte array
+    dataPos    = *(int*)&(header[0x0A]);
+    imageSize  = *(int*)&(header[0x22]);
+    width      = *(int*)&(header[0x12]);
+    height     = *(int*)&(header[0x16]);
+
+    // Some BMP files are misformatted, guess missing information
+    if (imageSize==0)    imageSize=width*height*3; // 3 : one byte for each Red, Green and Blue component
+    if (dataPos==0)      dataPos=54; // The BMP header is done that way
+
+    // Create a buffer
+    data = new unsigned char [imageSize];
+
+    // Read the actual data from the file into the buffer
+    fread(data,1,imageSize,file);
+
+    //Everything is in memory now, the file can be closed
+    fclose(file);
+
+    glGenTextures(1, &tex);
+    glBindTexture(GL_TEXTURE_2D, tex);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 256, 256, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 }
 
 void fuckingshitwtf() {
@@ -53,11 +100,19 @@ void display(void) {
 
     GLUquadricObj *disk;
     disk = gluNewQuadric();
-
     GLUquadricObj *quadratic;
     quadratic = gluNewQuadric();
+
     glTranslatef(-0.25,-0.3,0.2);
     glRotatef(0.0f, 90.0f, 1.0f, 0.0f);
+    gluQuadricDrawStyle(quadratic, GLU_FILL);
+    glBindTexture(GL_TEXTURE_2D, tex);
+    gluQuadricTexture(quadratic, GL_TRUE);
+    gluQuadricNormals(quadratic, GLU_SMOOTH);
+    gluQuadricDrawStyle(disk, GLU_FILL);
+    // glBindTexture(GL_TEXTURE_2D, tex);
+    gluQuadricTexture(disk, GL_TRUE);
+    gluQuadricNormals(disk, GLU_SMOOTH);
     gluCylinder(quadratic, 0.15f, 0.15f, 0.1f, 32, 32);
     gluDisk(disk, 0, 0.15, 32, 32);
     glTranslatef(0,0,0.1);
@@ -75,6 +130,7 @@ void display(void) {
     glTranslatef(0,0,-0.5);
     glRotatef(0.0f, 90.0f, 1.0f, 0.0f);
     gluCylinder(quadratic, 0.15f, 0.15f, 0.1f, 32, 32);
+    gluQuadricOrientation(disk, GLU_OUTSIDE);
     gluDisk(disk, 0, 0.15, 32, 32);
     glTranslatef(0,0,0.1);
     gluDisk(disk, 0, 0.15, 32, 32);
@@ -87,12 +143,6 @@ void display(void) {
     glTranslatef(0,0,0.1);
     gluDisk(disk, 0, 0.15, 32, 32);
     glTranslatef(0,0,-0.1);
-
-    // glTranslatef(0,0,0);
-    // gluDisk(disk, 0, 0.15, 32, 32);
-
-    // glTranslatef(0,0,0);
-    // gluDisk(disk, 0, 0.15, 32, 32);
 
     glFlush();
     glutSwapBuffers();
@@ -109,6 +159,12 @@ void myReshape(GLsizei w, GLsizei h){
     glLoadIdentity();
 }
 
+void init(void) {
+    glEnable(GL_DEPTH_TEST);
+    make_tex();
+    glEnable(GL_TEXTURE_2D);
+}
+
 
 int main(int argc,char** argv) {
 	glutInit(&argc,argv);
@@ -123,5 +179,6 @@ int main(int argc,char** argv) {
     glutReshapeFunc (myReshape);
     fuckingshitwtf();
 	glutIdleFunc(idle);
+    init();
     glutMainLoop();
 }
