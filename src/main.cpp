@@ -51,29 +51,48 @@ void display(void) {
     glScalef(1.0/1.25,1.0,2.0);
     glutSolidCube(0.5);
 
-    GLUquadricObj *quadratic1;
-    quadratic1 = gluNewQuadric();
+    GLUquadricObj *disk;
+    disk = gluNewQuadric();
+
+    GLUquadricObj *quadratic;
+    quadratic = gluNewQuadric();
     glTranslatef(-0.25,-0.3,0.2);
     glRotatef(0.0f, 90.0f, 1.0f, 0.0f);
-    gluCylinder(quadratic1, 0.15f, 0.15f, 0.1f, 32, 32);
+    gluCylinder(quadratic, 0.15f, 0.15f, 0.1f, 32, 32);
+    gluDisk(disk, 0, 0.15, 32, 32);
+    glTranslatef(0,0,0.1);
+    gluDisk(disk, 0, 0.15, 32, 32);
+    glTranslatef(0,0,-0.1);
 
-    GLUquadricObj *quadratic2;
-    quadratic2 = gluNewQuadric();
     glTranslatef(-0.75,0,0);
     glRotatef(0.0f, 90.0f, 1.0f, 0.0f);
-    gluCylinder(quadratic2, 0.15f, 0.15f, 0.1f, 32, 32);
+    gluCylinder(quadratic, 0.15f, 0.15f, 0.1f, 32, 32);
+    gluDisk(disk, 0, 0.15, 32, 32);
+    glTranslatef(0,0,0.1);
+    gluDisk(disk, 0, 0.15, 32, 32);
+    glTranslatef(0,0,-0.1);
 
-    GLUquadricObj *quadratic3;
-    quadratic3 = gluNewQuadric();
     glTranslatef(0,0,-0.5);
     glRotatef(0.0f, 90.0f, 1.0f, 0.0f);
-    gluCylinder(quadratic3, 0.15f, 0.15f, 0.1f, 32, 32);
+    gluCylinder(quadratic, 0.15f, 0.15f, 0.1f, 32, 32);
+    gluDisk(disk, 0, 0.15, 32, 32);
+    glTranslatef(0,0,0.1);
+    gluDisk(disk, 0, 0.15, 32, 32);
+    glTranslatef(0,0,-0.1);
 
-    GLUquadricObj *quadratic4;
-    quadratic4 = gluNewQuadric();
     glTranslatef(0.75,0,0);
     glRotatef(0.0f, 90.0f, 1.0f, 0.0f);
-    gluCylinder(quadratic4, 0.15f, 0.15f, 0.1f, 32, 32);
+    gluCylinder(quadratic, 0.15f, 0.15f, 0.1f, 32, 32);
+    gluDisk(disk, 0, 0.15, 32, 32);
+    glTranslatef(0,0,0.1);
+    gluDisk(disk, 0, 0.15, 32, 32);
+    glTranslatef(0,0,-0.1);
+
+    // glTranslatef(0,0,0);
+    // gluDisk(disk, 0, 0.15, 32, 32);
+
+    // glTranslatef(0,0,0);
+    // gluDisk(disk, 0, 0.15, 32, 32);
 
     glFlush();
     glutSwapBuffers();
