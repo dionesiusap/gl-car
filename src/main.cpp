@@ -1,5 +1,7 @@
+#include <windows.h>
 #include <GL/glut.h>
 #include <math.h>
+#include <GL/glu.h>
 
 GLfloat xRotated, yRotated, zRotated;
 GLdouble size=1.0;
@@ -49,8 +51,32 @@ void display(void) {
     glScalef(1.0/1.25,1.0,2.0);
     glutSolidCube(0.5);
 
+    GLUquadricObj *quadratic1;
+    quadratic1 = gluNewQuadric();
+    glTranslatef(-0.25,-0.3,0.2);
+    glRotatef(0.0f, 90.0f, 1.0f, 0.0f);
+    gluCylinder(quadratic1, 0.15f, 0.15f, 0.1f, 32, 32);
+
+    GLUquadricObj *quadratic2;
+    quadratic2 = gluNewQuadric();
+    glTranslatef(-0.75,0,0);
+    glRotatef(0.0f, 90.0f, 1.0f, 0.0f);
+    gluCylinder(quadratic2, 0.15f, 0.15f, 0.1f, 32, 32);
+
+    GLUquadricObj *quadratic3;
+    quadratic3 = gluNewQuadric();
+    glTranslatef(0,0,-0.5);
+    glRotatef(0.0f, 90.0f, 1.0f, 0.0f);
+    gluCylinder(quadratic3, 0.15f, 0.15f, 0.1f, 32, 32);
+
+    GLUquadricObj *quadratic4;
+    quadratic4 = gluNewQuadric();
+    glTranslatef(0.75,0,0);
+    glRotatef(0.0f, 90.0f, 1.0f, 0.0f);
+    gluCylinder(quadratic4, 0.15f, 0.15f, 0.1f, 32, 32);
+
     glFlush();
-   glutSwapBuffers();
+    glutSwapBuffers();
 }
 
 void myReshape(GLsizei w, GLsizei h){
