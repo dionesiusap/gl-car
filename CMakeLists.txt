@@ -9,8 +9,14 @@ find_package(GLUT REQUIRED)
 include_directories("${PROJECT_SOURCE_DIR}/src")
 
 add_executable(main ./src/main.cpp)
+add_executable(car ./src/car-vertices.cpp)
 
 target_link_libraries(main
+	${GLUT_LIBRARIES}
+	${OPENGL_LIBRARIES}
+)
+
+target_link_libraries(car
 	${GLUT_LIBRARIES}
 	${OPENGL_LIBRARIES}
 )
