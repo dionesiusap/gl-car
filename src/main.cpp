@@ -8,14 +8,12 @@
 using namespace std;
 
 GLfloat xRotated, yRotated, zRotated;
+GLfloat scale;
 GLuint tex;
 GLdouble size=1.0;
 void display(void);
 
 void idle(void) {
-	// xRotated = xRotated + 0.01;
-	// yRotated += 0.01;
-    // zRotated += 0.01; 
     display();
 }
 
@@ -93,7 +91,8 @@ void display(void) {
     // rotation about Z axis
     glRotatef(zRotated,0.0,0.0,1.0);
     // scaling transfomation
-    glScalef(1.25,1.0,1.0);
+    glScalef(scale, scale, scale);
+    // glScalef(1.25,1.0,1.0);
     glTranslatef(-0.5,0,0);
     glutSolidCube(size);
 
@@ -174,9 +173,17 @@ void keyPressed (unsigned char key, int x, int y) {
     } else if (key == 'd') {
         yRotated += 1;
     } else if (key == 'w') {
-        xRotated += 1;
-    } else if (key == 's') {
         xRotated -= 1;
+    } else if (key == 's') {
+        xRotated += 1;
+    } else if (key == 'e') {
+        zRotated -= 1;
+    } else if (key == 'q') {
+        zRotated += 1;
+    } else if (key == '=') {
+        scale += 0.05;
+    } else if (key == '-') {
+        scale -= 0.05;
     }
 }
 
@@ -188,6 +195,7 @@ int main(int argc,char** argv) {
     xRotated = 10.0;
     yRotated = 30.0;
     zRotated = 0.0;
+    scale = 1;
 	glutCreateWindow("MOBILBOXBANGST");
     glutDisplayFunc(display);
     glutReshapeFunc (myReshape);
