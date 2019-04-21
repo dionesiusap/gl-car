@@ -91,7 +91,7 @@ void display(void) {
     // rotation about Z axis
     glRotatef(zRotated,0.0,0.0,1.0);
     // scaling transfomation
-    glScalef(scale, scale, scale);
+    glScalef(scale, scale/1.25, scale/1.25);
     // glScalef(1.25,1.0,1.0);
     glTranslatef(-0.5,0,0);
     glutSolidCube(size);
