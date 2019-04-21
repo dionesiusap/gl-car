@@ -5,3 +5,6 @@ MAIN = src/main.cpp
 
 ellen: $(MAIN)
 	$(CC) -Wall $(MAIN) $(LIBPATH) $(LIB) -o main
+
+nic: $(MAIN)
+	D:\Programs\MinGW\bin\g++ -Wall $(MAIN) $(LIBPATH) $(LIB) -o main

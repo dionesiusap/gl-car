@@ -1,8 +1,11 @@
-// #include <windows.h>
+#include <windows.h>
 #include <GL/glut.h>
 #include <math.h>
 #include <stdio.h>
 #include <GL/glu.h>
+#include <iostream>
+
+using namespace std;
 
 GLfloat xRotated, yRotated, zRotated;
 GLuint tex;
@@ -11,7 +14,7 @@ void display(void);
 
 void idle(void) {
 	// xRotated = xRotated + 0.01;
-	yRotated += 0.01;
+	// yRotated += 0.01;
     // zRotated += 0.01; 
     display();
 }
@@ -165,6 +168,17 @@ void init(void) {
     glEnable(GL_TEXTURE_2D);
 }
 
+void keyPressed (unsigned char key, int x, int y) {  
+    if (key == 'a') {
+        yRotated -= 1;
+    } else if (key == 'd') {
+        yRotated += 1;
+    } else if (key == 'w') {
+        xRotated += 1;
+    } else if (key == 's') {
+        xRotated -= 1;
+    }
+}
 
 int main(int argc,char** argv) {
 	glutInit(&argc,argv);
@@ -178,6 +192,7 @@ int main(int argc,char** argv) {
     glutDisplayFunc(display);
     glutReshapeFunc (myReshape);
     fuckingshitwtf();
+    glutKeyboardFunc(keyPressed); // Tell GLUT to use the method "keyPressed" for key presses  
 	glutIdleFunc(idle);
     init();
     glutMainLoop();
