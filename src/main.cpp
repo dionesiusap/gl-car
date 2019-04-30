@@ -91,9 +91,9 @@ void initParticles(int i) {
     par_sys[i].life = 1.0;
     par_sys[i].fade = float(rand()%100)/1000.0f+0.003f;
 
-    par_sys[i].xpos = (float) (rand() % 21) - 10;
+    par_sys[i].xpos = (float) ((rand() % 21) - 10)/3;
     par_sys[i].ypos = 15.0;
-    par_sys[i].zpos = (float) (rand() % 21) - 10;
+    par_sys[i].zpos = (float) ((rand() % 21) - 10)/3;
 
     par_sys[i].red = 0.5;
     par_sys[i].green = 0.5;
@@ -237,8 +237,14 @@ void display(void) {
     glScalef(1.0/1.25,1.0,2.0);
     glutSolidCube(0.5);
 
+    glDisable(GL_LIGHT0);
+    glDisable(GL_LIGHTING);
+
     drawRain();
     glPopMatrix();
+
+    glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHTING);
 
     GLUquadricObj *disk;
     disk = gluNewQuadric();
