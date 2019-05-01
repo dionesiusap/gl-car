@@ -192,7 +192,7 @@ void make_tex(void)
 
     glGenTextures(1, &tex);
     glBindTexture(GL_TEXTURE_2D, tex);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 256, 256, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 400, 400, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 }
@@ -239,11 +239,13 @@ void display(void) {
 
     glDisable(GL_LIGHT0);
     glDisable(GL_LIGHTING);
+    glDisable(GL_TEXTURE_2D);
 
     drawRain();
     glPopMatrix();
 
     glEnable(GL_LIGHT0);
+    glEnable(GL_TEXTURE_2D);
     glEnable(GL_LIGHTING);
 
     GLUquadricObj *disk;
