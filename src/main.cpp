@@ -55,36 +55,6 @@ typedef struct {
 // Paticle System
 particles par_sys[MAX_PARTICLES];
 
-void normal_keys(unsigned char key, int x, int y) {
-  if (key == 'r') { // Rain
-    fall = RAIN;
-    glutPostRedisplay();
-  }
-  if (key == 'h') { // Hail
-    fall = HAIL;
-    glutPostRedisplay();
-  }
-  if (key == 's') { // Snow
-    fall = SNOW;
-    glutPostRedisplay();
-  }
-  if (key == '=') { //really '+' - make hail bigger
-    hailsize += 0.01;
-  }
-  if (key == '-') { // make hail smaller
-    if (hailsize > 0.1) hailsize -= 0.01;
-  }
-  if (key == ',') { // really '<' slow down
-    if (slowdown > 4.0) slowdown += 0.01;
-  }
-  if (key == '.') { // really '>' speed up
-    if (slowdown > 1.0) slowdown -= 0.01;
-  }
-  if (key == 'q') { // QUIT
-    exit(0);
-  }
-}
-
 // Initialize/Reset Particles - give them their attributes
 void initParticles(int i) {
     par_sys[i].alive = true;
@@ -92,7 +62,7 @@ void initParticles(int i) {
     par_sys[i].fade = float(rand()%100)/1000.0f+0.003f;
 
     par_sys[i].xpos = (float) ((rand() % 21) - 10)/3;
-    par_sys[i].ypos = 15.0;
+    par_sys[i].ypos = 5.0;
     par_sys[i].zpos = (float) ((rand() % 21) - 10)/3;
 
     par_sys[i].red = 0.5;
